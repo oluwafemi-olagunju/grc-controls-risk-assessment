@@ -2,7 +2,7 @@
 
 A controls-focused risk assessment of two Windows systems (a domain server and an endpoint), written the way an IT auditor or GRC analyst would document it: control objective, observed gap, business risk, and remediation — not a vulnerability-by-vulnerability technical writeup.
 
-The underlying technical work (SIEM deployment, log analysis, compliance scanning) was performed as part of a broader hands-on security engagement. **This repo is a deliberate reframing of a subset of that work** — specifically the configuration-compliance and audit-trail findings — into the structure a controls assessment, SOC 2 readiness review, or internal audit of IT general controls would actually take. The full technical engagement, including application-layer penetration testing, is documented separately: [vulnerability-assessment-project](https://github.com/oluwafemi-olagunju/vulnerability-assessment-project).
+The underlying technical work (SIEM deployment, log analysis, compliance scanning) was performed as part of a broader hands-on security engagement. **This repo is a deliberate reframing of a subset of that work** — specifically the configuration-compliance and audit-trail findings — into the structure a controls assessment, SOC 2 readiness review, or internal audit of IT general controls would actually take. The full technical engagement, including application-layer penetration testing, is documented separately: [cybersecurity-project-portfolio](https://github.com/oluwafemi-olagunju/cybersecurity-project-portfolio)
 
 ## Why a separate writeup
 

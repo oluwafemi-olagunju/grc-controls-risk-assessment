@@ -12,7 +12,7 @@ Risk rating combines likelihood (how directly exploitable the gap is, given the 
 |---|---|
 | **Control objective** | Remote administrative access (WinRM) should be configured to resist credential theft and unauthorized shell access |
 | **Observed condition** | On the domain server, Digest authentication is permitted, Remote Shell Access is allowed without restriction, and RunAs credential caching is not disabled |
-| **Why it's rated High** | This server's only externally reachable service *is* WinRM — these three failing controls are not abstract hardening gaps, they directly weaken the one administrative pathway an attacker could actually reach |
+| **Why it's rated High** | This server's only network-reachable service *is* WinRM — these three failing controls are not abstract hardening gaps, they directly weaken the one administrative pathway reachable from elsewhere in the environment |
 | **Risk rating** | High |
 | **Business impact** | Credential exposure or unauthorized remote shell access to a domain server, with no network-layer control positioned to catch it, since the perimeter scan separately confirmed WinRM as an intentionally exposed, not accidentally exposed, service |
 | **Remediation** | Disable Digest authentication; restrict Remote Shell Access to authorized administrative accounts/IP ranges; disable RunAs credential caching |

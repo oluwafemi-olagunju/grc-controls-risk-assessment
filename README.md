@@ -2,7 +2,7 @@
 
 A controls-focused risk assessment of two Windows systems (a domain server and an endpoint), written the way an IT auditor or GRC analyst would document it: control objective, observed gap, business risk, and remediation — not a vulnerability-by-vulnerability technical writeup.
 
-The underlying technical work (SIEM deployment, log analysis, compliance scanning) was performed as part of a broader hands-on security engagement. **This repo is a deliberate reframing of a subset of that work** — specifically the configuration-compliance and audit-trail findings — into the structure a controls assessment, SOC 2 readiness review, or internal audit of IT general controls would actually take. The full technical engagement, including application-layer penetration testing, is documented separately: [cybersecurity-project-portfolio](https://github.com/oluwafemi-olagunju/cybersecurity-project-portfolio)
+The underlying technical work (SIEM deployment, log analysis, compliance scanning) was performed as part of a broader hands-on security engagement. **This repo is a deliberate reframing of a subset of that work** — specifically the configuration-compliance and audit-trail findings — into the structure a controls assessment, SOC 2 readiness review, or internal audit of IT general controls would actually take. The full technical engagement, including application-layer penetration testing, is documented separately: [cybersecurity-project-portfolio](https://github.com/oluwafemi-olagunju/cybersecurity-project-portfolio).
 
 ## Why a separate writeup
 
@@ -12,13 +12,14 @@ A penetration test report and a controls assessment answer different questions f
 
 - **In scope:** two Windows systems — one domain-joined server, one client endpoint — assessed against their applicable CIS Benchmark (CIS Windows Server 2025 Benchmark; CIS Windows 11 Enterprise Benchmark v3.0.0).
 - **Methodology:** automated SCA (Security Configuration Assessment) scanning against each benchmark, cross-checked against direct host-level evidence (`auditpol`, firewall profile state) rather than taken at face value — the same "verify, don't assume" standard a control test should be held to.
+- **A note on "exposed"/"reachable" language in this assessment:** this environment is an isolated, host-only lab with no internet-facing systems. Where a finding describes a service as exposed or reachable, that means reachable by another host within this lab segment — not from the public internet. The distinction matters for how severely a finding should be weighted in a real deployment.
 - **Out of scope for this writeup:** the application-security and phishing-simulation findings from the broader engagement, which are penetration-testing deliverables, not controls-assessment deliverables, and are documented in the companion repo linked above.
 
 ## Executive summary
 
 Both systems fail **over 70% of their applicable CIS benchmark controls** — a result that looks worse than it is operationally, and better than it should when you look at *which* controls are failing. The network perimeter around these systems is well hardened (minimal exposed services, SMB signing enforced, host-based firewalls active). The gap is entirely in configuration hardening and audit-trail completeness *behind* that perimeter — the layer that determines whether an incident would actually be detected and investigable, not whether it's preventable at the network edge.
 
-Three gaps carry outsized risk relative to the rest of the compliance deficit, because they compound the one service this environment actually exposes externally (remote administration over WinRM) with a reduced ability to detect misuse of it:
+Three gaps carry outsized risk relative to the rest of the compliance deficit, because they compound the one service exposed to the rest of this network segment (remote administration over WinRM) with a reduced ability to detect misuse of it:
 
 1. **Remote-access hardening controls are failing specifically on the server** that exposes remote administration — the compliance gap and the attack surface overlap directly.
 2. **No audit trail exists for firewall-level network activity** on either system — there is currently no way to reconstruct what connections were allowed or blocked after the fact.
@@ -44,7 +45,7 @@ Full detail, including framework mapping, is in [RISK-REGISTER.md](RISK-REGISTER
 
 | ID | Control Domain | Risk | Why it's prioritized |
 |---|---|---|---|
-| R-01 | Remote Access Configuration | High | Fails on the one system that exposes a remote-management service externally — the gap and the exposure are the same surface |
+| R-01 | Remote Access Configuration | High | Fails on the one system that exposes a remote-management service to the network — the gap and the exposure are the same surface |
 | R-02 | Audit Log Management (Network) | High | Zero audit trail for allowed/blocked network connections on either system |
 | R-03 | Audit Log Management (Process) | Medium | Process-creation auditing enabled on one system, disabled on the other, with no risk-based justification found for the difference |
 | R-04 | Account Lockout / Authentication | Medium | No lockout policy on either system — exposure is currently masked by benign observed activity, not by a control |
